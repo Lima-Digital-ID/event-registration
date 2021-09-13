@@ -9,7 +9,13 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>{{ (Request::segment(2) != null ? ucwords(Request::segment(2)) : 'Dashboard').' - '.config('app.name', 'Event Registration') }}</title>
+  @php
+  if (Request::segment(2) == 'guest-book') 
+    $title = 'Buku Tamu';
+  else
+    $title = Request::segment(2);
+  @endphp
+  <title>{{ ($title != null ? ucwords(str_replace('-', ' ', $title)) : 'Dashboard').' - '.config('app.name', 'Event Registration') }}</title>
 
   <!-- Custom fonts for this template-->
   <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">

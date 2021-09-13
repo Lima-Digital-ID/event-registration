@@ -18,7 +18,7 @@ class CreateGuestBook extends Migration
             $table->bigInteger('visitor_id', false, true);
             $table->timestamps();
 
-            $table->foreign('visitor_id')->references('id')->on('visitors');
+            $table->foreign('visitor_id')->references('id')->on('visitors')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

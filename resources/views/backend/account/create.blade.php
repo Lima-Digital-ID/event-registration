@@ -46,23 +46,43 @@
                 @csrf
                 <div class="form-group">
                     <label for="nama">Nama</label>
-                    <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." value="{{ old('nama') }}">
+                    <input type="text" class="form-control form-control-user @error('nama') is-invalid @enderror" name="nama" id="nama" placeholder="Masukkan Nama..." value="{{ old('nama') }}">
+                    @error('nama')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail">Email</label>
-                    <input type="email" class="form-control form-control-user" name="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Masukkan Email..." value="{{ old('email') }}">
+                    <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Masukkan Email..." value="{{ old('email') }}">
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="role">Role</label>
-                    <select name="role" id="role" class="form-control">
+                    <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
                         <option value="0" {{ old('role') == 0 ? 'selected' : '' }}>Pilih Role</option>
                         <option value="Administrator" {{ old('role') == 'Administrator' ? 'selected' : '' }}>Administrator</option>
                         <option value="Panitia" {{ old('role') == 'Panitia' ? 'selected' : '' }}>Panitia</option>
                     </select>
+                    @error('role')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Masukkan Password...">
+                    <input type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" id="password" placeholder="Masukkan Password...">
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-success">Simpan</button>
                 <button type="reset" class="btn btn-danger">Reset</button>

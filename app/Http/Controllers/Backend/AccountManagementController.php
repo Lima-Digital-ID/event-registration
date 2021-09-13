@@ -55,8 +55,8 @@ class AccountManagementController extends Controller
                 'password' => 'required|min:4'
             ],
             [
-                'required' => ':attribute harus diisi',
-                'not_in' => ':attribute harus dipilih',
+                'required' => ':attribute harus diisi.',
+                'not_in' => ':attribute harus dipilih.',
                 'password.min' => 'Minimal panjang 4 karakter.'
             ],
             [
@@ -135,8 +135,8 @@ class AccountManagementController extends Controller
                 'password' => 'required|min:4'
             ],
             [
-                'required' => ':attribute harus diisi',
-                'not_in' => ':attribute harus dipilih',
+                'required' => ':attribute harus diisi.',
+                'not_in' => ':attribute harus dipilih.',
                 'password.min' => 'Minimal panjang 4 karakter.'
             ],
             [

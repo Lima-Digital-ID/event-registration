@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', function () {
             return view('dashboard');
         })->name('dashboard');
-    
+        Route::get('get-city', [ListRegistrationController::class, 'getCity'])->name('get-city');
         Route::resource('account', AccountManagementController::class);
         Route::resource('list-registration', ListRegistrationController::class);
         Route::resource('guest-book', GuestBookController::class);
