@@ -317,7 +317,7 @@ ul.social li{
 			          <td style="text-align: center;">
 			          	<div class="text-author">
 				          	<img src="https://img.icons8.com/clouds/100/000000/handshake.png" alt="" style="width: 100px; max-width: 600px; height: auto; margin: auto; display: block;">
-				          	{{--  <h3 class="name">Ronald Tuff</h3>  --}}
+				          	<h3 class="name">{{ $nomorPendaftaran }}</h3>
 				          	<span class="position">Silahkan cek email anda untuk info selanjutnya.</span>
 			           	</div>
 			          </td>
@@ -334,7 +334,7 @@ ul.social li{
       </tr><!-- end: tr -->
       <tr>
         <td class="bg_light" style="text-align: center; padding-bottom: 30px;">
-            <p>Copyright <a href="#" target="_blank">&copy; Greensoft</a>.</p>
+            <p>Copyright &copy; <a href="#" target="_blank">Greensoft</a>.</p>
         </td>
       </tr>
     </table>

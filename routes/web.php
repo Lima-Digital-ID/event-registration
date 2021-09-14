@@ -37,8 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('registration-city', [RegistrationController::class, 'getCity'])->name('registration-city');
 Route::get('registration', [RegistrationController::class, 'index'])->name('registration');
 Route::post('registration', [RegistrationController::class, 'store'])->name('registration-store');
-Route::get('success', function(){
-    return view('frontend.email');
-});
+// Route::get('success', function(){
+//     return view('frontend.success');
+// });
 
 require __DIR__.'/auth.php';

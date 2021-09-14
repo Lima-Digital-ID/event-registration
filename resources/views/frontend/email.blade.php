@@ -316,16 +316,17 @@ ul.social li{
             	<tr>
 			          <td style="text-align: center;">
 			          	<div class="text-author">
-				          	{{--  <img src="https://img.icons8.com/clouds/100/000000/handshake.png" alt="" style="width: 100px; max-width: 600px; height: auto; margin: auto; display: block;">  --}}
 							@php
-							$qrcode = QrCode::size(250)->generate('testqrcode');
+							$qrcode = QrCode::size(250)->generate($nomorPendaftaran);
 							$qrcode = str_replace('250', '100%', $qrcode);
 							$qrcode = str_replace('viewBox="0 0 100% 100%"', 'viewBox="0 0 250 250"', $qrcode);
 							@endphp
 							{!! $qrcode !!}
 							<br>
 							<br>
-				          	<span class="position">Silahkan menggunakan QRCode diatas untuk tiket masuk.</span>
+							<h3 class="name">{{ $nomorPendaftaran }}</h3>
+							<br>
+				          	<span>Silahkan menggunakan QRCode diatas untuk tiket masuk.</span>
 			           	</div>
 			          </td>
 			        </tr>
@@ -337,7 +338,7 @@ ul.social li{
       <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
       <tr>
         <td class="bg_light" style="text-align: center; padding-top: 20px; padding-bottom: 30px;">
-            <p>Copyright <a href="#" target="_blank">&copy; Greensoft</a>.</p>
+            <p>Copyright &copy;<a href="#" target="_blank">Greensoft</a>.</p>
         </td>
       </tr>
     </table>

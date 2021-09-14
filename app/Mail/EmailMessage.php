@@ -12,14 +12,16 @@ class EmailMessage extends Mailable
     use Queueable, SerializesModels;
 
 
+    private $nomorPendaftaran = '';
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($nomorPendaftaran)
     {
-        
+        $this->nomorPendaftaran = $nomorPendaftaran;
     }
 
     /**
@@ -30,6 +32,6 @@ class EmailMessage extends Mailable
     public function build()
     {
         return $this->subject('Berhasil Registrasi')
-        ->view('frontend.email');
+        ->view('frontend.email')->with('nomorPendaftaran', $this->nomorPendaftaran);
     }
 }

@@ -71,7 +71,7 @@ class RegistrationController extends Controller
             if($peserta->count() > 0){
                 $nomorPendaftaran = $peserta[0]->nomor_pendaftaran;
 
-                $lastIncrement = substr($nomorPendaftaran, 7);
+                $lastIncrement = substr($nomorPendaftaran, 8);
 
                 $nomorPendaftaran = str_pad($lastIncrement + 1, 3, 0, STR_PAD_LEFT);
                 $nomorPendaftaran = $now.$nomorPendaftaran;
@@ -94,9 +94,9 @@ class RegistrationController extends Controller
 
             $newPeserta->save();
 
-            Mail::to($request->get('email'))->send(new \App\Mail\EmailMessage());
+            Mail::to($request->get('email'))->send(new \App\Mail\EmailMessage($nomorPendaftaran));
 
-            return view('frontend.success');
+            return view('frontend.success')->with('nomorPendaftaran', $nomorPendaftaran);
         }
         catch(\Exception $e) {
             return $e->getMessage();

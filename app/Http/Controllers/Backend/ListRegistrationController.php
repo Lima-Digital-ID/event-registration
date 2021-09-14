@@ -47,7 +47,7 @@ class ListRegistrationController extends Controller
             if($peserta->count() > 0){
                 $nomorPendaftaran = $peserta[0]->nomor_pendaftaran;
 
-                $lastIncrement = substr($nomorPendaftaran, 7);
+                $lastIncrement = substr($nomorPendaftaran, 8);
 
                 $nomorPendaftaran = str_pad($lastIncrement + 1, 3, 0, STR_PAD_LEFT);
                 $nomorPendaftaran = $now.$nomorPendaftaran;
@@ -122,6 +122,8 @@ class ListRegistrationController extends Controller
             $newPeserta->date_of_birth = $request->get('tgl_lahir');
 
             $newPeserta->save();
+
+            Mail::to($request->get('email'))->send(new \App\Mail\EmailMessage($request->get('_nomor')));
 
             return redirect('administrator/list-registration')->withStatus('Berhasil menyimpan data.');
         }

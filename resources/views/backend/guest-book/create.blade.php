@@ -46,9 +46,19 @@
           </div>
           <!-- Card Body -->
           <div class="card-body">
-            <form action="{{ route('guest-book.store') }}" method="POST">
-                @csrf
-                <div class="form-group">
+            <div class="form-group">
+                <label for="qrcode">QR Code</label>
+                <input type="text" name="qrcode" id="qrcode" class="form-control" placeholder="Masukkan QR Code disini..." autofocus>
+                @error('qrcode')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+            {{--  <form action="{{ route('guest-book.store') }}" method="POST">
+                @csrf  --}}
+                
+                {{--  <div class="form-group">
                     <label for="visitor">Peserta</label>
                     <select name="visitor" id="visitor" class="form-control select2 @error('visitor') is-invalid @enderror">
                         <option value="0" {{ old('visitor') == 0 ? 'selected' : '' }}>Pilih Peserta</option>
@@ -61,10 +71,10 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-                </div>
-                <button type="submit" class="btn btn-success">Simpan</button>
-                <button type="reset" class="btn btn-danger">Reset</button>
-            </form>
+                </div>  --}}
+                {{--  <button type="submit" class="btn btn-success">Simpan</button>  --}}
+                {{--  <button type="reset" class="btn btn-danger">Reset</button>  --}}
+            {{--  </form>  --}}
           </div>
         </div>
       </div>
@@ -83,5 +93,11 @@
         });
     });
 
+    $('#qrcode').change(function(e) {
+        console.log('tescuy');
+        var code = $(this).val();
+        console.log(code);
+        $(this).val('');
+    });
 </script>
 @endpush
