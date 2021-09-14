@@ -170,4 +170,66 @@ class GuestBookController extends Controller
         //     return redirect()->back()->withError('Terjadi kesalahan pada database. '.$e->getMessage());
         // }
     }
+
+    public function addGuest(Request $request)
+    {
+        try {
+            $nomorPendaftaran = $request->get('nomor_pendaftaran');
+            $visitor = Visitors::where('nomor_pendaftaran', $nomorPendaftaran)->first();
+            if($visitor) {
+                // jika peserta ditemukan
+                $isAlreadyGuest = GuestBook::where('visitor_id', $visitor->id)->get();
+                if(count($isAlreadyGuest) > 0) {
+                    // sudah terdaftar sebagai tamu
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'sudah terdaftar di buku tamu',
+                        'data' => $visitor
+                    ];
+                    return $response;
+                }
+                else {
+                    // belum terdaftar sebagai tamu
+                    $newGuest = new GuestBook;
+                    $newGuest->visitor_id = $visitor->id;
+
+                    $newGuest->save();
+
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'berhasil',
+                        'data' => $visitor
+                    ];
+                    return $response;
+                }
+            }
+            else {
+                // jika peserta tidak ditemukan
+                $response = [
+                    'status' => 'success',
+                    'message' => 'peserta tidak ada',
+                    'data' => $visitor
+                ];
+                return $response;
+            }
+        }
+        catch(\Exception $e){
+            $json = [
+                'status' => 'failed',
+                'message' => 'Terjadi kesalahan. '.$e->getMessage(),
+                'data' => null
+            ];
+
+            return $json;
+        }
+        catch(\Illuminate\Database\QueryException $e){
+            $json = [
+                'status' => 'failed',
+                'message' => 'Terjadi kesalahan pada database.'.$e->getMessage(),
+                'data' => null
+            ];
+
+            return $json;
+        }
+    }
 }

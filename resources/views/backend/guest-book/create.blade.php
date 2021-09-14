@@ -14,27 +14,21 @@
     </div>
 
     <!-- Content Row -->
-    <div class="row">
-      @if (session('status'))
-          <div class="alert alert-success sb-alert-icon m-3 w-100" role="alert">
-              <button class="close" type="button" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-              </button>
-              <div class="sb-alert-icon-content">
-                  {{session('status')}}
-              </div>
-          </div>
-      @elseif (session('error'))
-          <div class="alert alert-danger sb-alert-icon m-3 w-100" role="alert">
-              <button class="close" type="button" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-              </button>
-              <div class="sb-alert-icon-content">
-                  {{session('error')}}
-              </div>
-          </div>
-      @endif
-    </div>
+    @if (session('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{session('status')}}
+        </div>
+    @elseif (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            {{session('status')}}
+        </div>
+    @endif
 
     <div class="row">
 
@@ -48,7 +42,7 @@
           <div class="card-body">
             <div class="form-group">
                 <label for="qrcode">QR Code</label>
-                <input type="text" name="qrcode" id="qrcode" class="form-control" placeholder="Masukkan QR Code disini..." autofocus>
+                <input type="text" name="qrcode" id="qrcode" class="form-control" placeholder="Scan QR Code atau masukkan nomor pendaftaran disini..." autofocus>
                 @error('qrcode')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -80,6 +74,28 @@
       </div>
 
     </div>
+    {{--  <div class="row p-xl-3">
+        <div class="col">
+            <div id="success-alert" class="alert alert-success alert-dismissible fade show" style="visibility: hidden;" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span id="success-message">Berhasil!</span>
+            </div>
+            <div id="warning-alert" class="alert alert-warning alert-dismissible fade show"style="visibility: hidden;" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span id="warning-message">Peserta sudah terdaftar di buku tamu.</span>
+            </div>
+            <div id="error-alert" class="alert alert-danger alert-dismissible fade show"style="visibility: hidden;" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span id="error-message">Terjadi kesalahan.</span>
+            </div>
+        </div>
+    </div>  --}}
 
 </div>
 @endsection
@@ -94,10 +110,41 @@
     });
 
     $('#qrcode').change(function(e) {
-        console.log('tescuy');
+        console.log('start ajax');
         var code = $(this).val();
         console.log(code);
-        $(this).val('');
-    });
+        let url = "{{ route('add-guest') }}";
+        console.log(url);
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "nomor_pendaftaran": code,
+            },
+            success: function(response){
+                console.log(response);
+                if(response["message"] == 'berhasil') {
+                    console.log(response['data']['name']);
+                    console.log('berhasil menambahkan tamu');
+                    alert('Berhasil menambahkan tamu');
+                }
+                else if(response['message'] == 'sudah terdaftar di buku tamu') {
+                    console.log(response['message']);
+                    alert('Sudah terdaftar di buku tamu');
+                }
+                else if(response['message'] == 'peserta tidak ada') {
+                    console.log(response['message']);
+                    alert('Peserta tidak ada');
+                }
+                else {
+                    console.log('terjadi kesalahan');
+                    alert('Terjadi kesalahan');
+                }
+                $('#qrcode').val('');
+            }
+        });
+    })
 </script>
 @endpush

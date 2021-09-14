@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('account', AccountManagementController::class);
         Route::resource('list-registration', ListRegistrationController::class);
         Route::resource('guest-book', GuestBookController::class);
+        Route::post('add-guest', [GuestBookController::class, 'addGuest'])->name('add-guest');
     });
 
 });
