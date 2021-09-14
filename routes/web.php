@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AccountManagementController;
 use App\Http\Controllers\Backend\ListRegistrationController;
 use App\Http\Controllers\Backend\GuestBookController;
+use App\Http\Controllers\Frontend\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'administrator'], function() {    
-        Route::get('/', function () {
+        Route::get('dashboard', function () {
             return view('dashboard');
         })->name('dashboard');
         Route::get('get-city', [ListRegistrationController::class, 'getCity'])->name('get-city');
@@ -33,5 +34,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 
+Route::get('registration-city', [RegistrationController::class, 'getCity'])->name('registration-city');
+Route::get('registration', [RegistrationController::class, 'index'])->name('registration');
+Route::post('registration', [RegistrationController::class, 'store'])->name('registration-store');
+Route::get('success', function(){
+    return view('frontend.email');
+});
 
 require __DIR__.'/auth.php';
