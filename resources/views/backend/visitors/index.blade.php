@@ -51,6 +51,7 @@
                       <th class="text-center">Nama</th>
                       <th class="text-center">Email</th>
                       <th class="text-center">Gender</th>
+                      <th class="text-center">Waktu</th>
                       <th class="text-center">Aksi</th>
                     </tr>
                   </thead>
@@ -61,6 +62,7 @@
                       <th class="text-center">Nama</th>
                       <th class="text-center">Email</th>
                       <th class="text-center">Gender</th>
+                      <th class="text-center">Waktu</th>
                       <th class="text-center">Aksi</th>
                     </tr>
                   </tfoot>
@@ -72,6 +74,7 @@
                       <td class="text-center">{{ $item->name }}</td>
                       <td class="text-center">{{ $item->email }}</td>
                       <td class="text-center">{{ $item->gender }}</td>
+                      <td class="text-center">{{ $item->created_at }}</td>
                       <td>
                         <div class="d-flex justify-content-center">
                           <div>
