@@ -8,6 +8,9 @@ use App\Models\Province;
 use App\Models\Visitors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
+use Illuminate\Support\Facades\Http;
 
 class RegistrationController extends Controller
 {
@@ -93,6 +96,8 @@ class RegistrationController extends Controller
             $newPeserta->date_of_birth = $request->get('tgl_lahir');
 
             $newPeserta->save();
+            
+            $sendWhatsapp = $this->sendMedia($nomorPendaftaran, $request->get('no_hp'));
 
             Mail::to($request->get('email'))->send(new \App\Mail\EmailMessage($nomorPendaftaran));
 
@@ -115,5 +120,37 @@ class RegistrationController extends Controller
         $city = json_encode($city);
 
         return $city;
+    }
+
+    private function sendMedia($nomorPendaftaran, $phone)
+    {
+        $qrcode = FacadesQrCode::format('png')
+                ->size(250)
+                ->errorCorrection('H')
+                ->generate($nomorPendaftaran);
+
+        $qrcode = str_replace('250', '100%', $qrcode);
+        $qrcode = str_replace('viewBox="0 0 100% 100%"', 'viewBox="0 0 250 250"', $qrcode);
+
+        $output_file = 'img-' . $nomorPendaftaran . '.png';
+
+        Storage::disk('public')->put($output_file, $qrcode); //public/qrcode/img-1557309130.png
+
+        // $file = asset('qrcode/img-'.$nomorPendaftaran.'.png');
+        $file = 'http://127.0.0.1:8002/qrcode/img-'.$nomorPendaftaran.'.png';
+        // $file = 'https://www.nicesnippets.com/upload/blog/1622612582_social-media.png';
+
+        $caption = 'Silahkan menggunakan QRCode diatas untuk tiket masuk.';
+
+        $url = 'http://127.0.0.1:8000/send-media';
+
+        $response = Http::post($url, [
+            'number' => $phone,
+            'caption' => $caption,
+            'file' => $file,
+        ]);
+        $res = json_decode($response, false);
+
+        return $res->status;
     }
 }

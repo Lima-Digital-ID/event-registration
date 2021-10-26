@@ -9,7 +9,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">{{ Request::segment(2) != null ? ucwords(str_replace('-', ' ', Request::segment(2))) : 'Dashboard' }}</h1>
+      <h1 class="h3 mb-0 text-gray-800">Pendaftaran</h1>
       <a href="{{ route('list-registration.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-arrow-left fa-sm text-white-50"></i> Lihat Data</a>
     </div>
 
@@ -50,11 +50,11 @@
                 @csrf
                 <div class="row">
                     <div class="col">
-                        <div class="form-group">
+                        {{--  <div class="form-group">
                             <input type="hidden" name="_nomor" value="{{ $nomorPendaftaran }}">
                             <label for="nomor">Nomor Pendaftaran</label>
                             <input type="text" class="form-control form-control-user" name="nomor" id="nomor" placeholder="ex: 20210913" readonly value="{{ old('nomor', $nomorPendaftaran) }}">
-                        </div>
+                        </div>  --}}
                         <div class="form-group">
                             <label for="nama">Nama</label>
                             <input type="text" class="form-control form-control-user @error('nama') is-invalid @enderror" name="nama" id="nama" placeholder="Masukkan Nama..." value="{{ old('nama') }}">

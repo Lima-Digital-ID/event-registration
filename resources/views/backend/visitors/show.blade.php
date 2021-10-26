@@ -83,6 +83,10 @@
                 <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->date_of_birth) }}">
               </div>
               <div class="form-group">
+                <label for="nama">Registrasi Pada</label>
+                <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->created_at) }}">
+              </div>
+              <div class="form-group">
                 <label for="nama">QR Code</label><br>
                 {!! QrCode::size(250)->generate($data->nomor_pendaftaran); !!}
               </div>

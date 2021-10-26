@@ -8,6 +8,9 @@ use App\Models\Province;
 use App\Models\Visitors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
+use Illuminate\Support\Facades\Http;
 
 class ListRegistrationController extends Controller
 {
@@ -40,25 +43,25 @@ class ListRegistrationController extends Controller
     public function create()
     {
         try {
-            $nomorPendaftaran = null;
-            $peserta = Visitors::orderBy('nomor_pendaftaran', 'DESC')->get();
+            // $nomorPendaftaran = null;
+            // $peserta = Visitors::orderBy('nomor_pendaftaran', 'DESC')->get();
 
-            $now = date('Ymd');
+            // $now = date('Ymd');
 
-            if($peserta->count() > 0){
-                $nomorPendaftaran = $peserta[0]->nomor_pendaftaran;
+            // if($peserta->count() > 0){
+            //     $nomorPendaftaran = $peserta[0]->nomor_pendaftaran;
 
-                $lastIncrement = substr($nomorPendaftaran, 8);
+            //     $lastIncrement = substr($nomorPendaftaran, 8);
 
-                $nomorPendaftaran = str_pad($lastIncrement + 1, 3, 0, STR_PAD_LEFT);
-                $nomorPendaftaran = $now.$nomorPendaftaran;
+            //     $nomorPendaftaran = str_pad($lastIncrement + 1, 3, 0, STR_PAD_LEFT);
+            //     $nomorPendaftaran = $now.$nomorPendaftaran;
 
-            }
-            else{
-                $nomorPendaftaran = $now."001";
-            }
+            // }
+            // else{
+            //     $nomorPendaftaran = $now."001";
+            // }
             
-            $this->params['nomorPendaftaran'] = $nomorPendaftaran;
+            // $this->params['nomorPendaftaran'] = $nomorPendaftaran;
             
             $this->params['provinsi'] = Province::orderBy('nama')->get();
         }
@@ -82,7 +85,7 @@ class ListRegistrationController extends Controller
     {
         $this->validate($request, 
         [
-                'nomor' => 'required',
+                // 'nomor' => 'required',
                 'nama' => 'required',
                 'email' => 'required',
                 'gender' => 'required|not_in:0',
@@ -98,7 +101,7 @@ class ListRegistrationController extends Controller
                 'password.min' => 'Minimal panjang 4 karakter.'
             ],
             [
-                'nomor' => 'Nomor Pendaftaran',
+                // 'nomor' => 'Nomor Pendaftaran',
                 'nama' => 'Nama',
                 'email' => 'Email',
                 'gender' => 'Gender',
@@ -111,8 +114,26 @@ class ListRegistrationController extends Controller
         );
 
         try {
+            $nomorPendaftaran = null;
+            $peserta = Visitors::orderBy('nomor_pendaftaran', 'DESC')->get();
+
+            $now = date('Ymd');
+
+            if($peserta->count() > 0){
+                $nomorPendaftaran = $peserta[0]->nomor_pendaftaran;
+
+                $lastIncrement = substr($nomorPendaftaran, 8);
+
+                $nomorPendaftaran = str_pad($lastIncrement + 1, 3, 0, STR_PAD_LEFT);
+                $nomorPendaftaran = $now.$nomorPendaftaran;
+
+            }
+            else{
+                $nomorPendaftaran = $now."001";
+            }
+            
             $newPeserta = new Visitors;
-            $newPeserta->nomor_pendaftaran = $request->get('_nomor');
+            $newPeserta->nomor_pendaftaran = $nomorPendaftaran;
             $newPeserta->name = $request->nama;
             $newPeserta->province_id = $request->provinsi;
             $newPeserta->city_id = $request->kota;
@@ -124,7 +145,9 @@ class ListRegistrationController extends Controller
 
             $newPeserta->save();
 
-            Mail::to($request->get('email'))->send(new \App\Mail\EmailMessage($request->get('_nomor')));
+            $sendWhatsapp = $this->sendMedia($nomorPendaftaran, $request->get('no_hp'));
+
+            Mail::to($request->get('email'))->send(new \App\Mail\EmailMessage($nomorPendaftaran));
 
             return redirect('administrator/list-registration')->withStatus('Berhasil menyimpan data.');
         }
@@ -134,6 +157,38 @@ class ListRegistrationController extends Controller
         catch(\Illuminate\Database\QueryException $e) {
             return back()->withError('Terjadi kesalahan pada database. '.$e->getMessage());
         }
+    }
+
+    private function sendMedia($nomorPendaftaran, $phone)
+    {
+        $qrcode = FacadesQrCode::format('png')
+                ->size(250)
+                ->errorCorrection('H')
+                ->generate($nomorPendaftaran);
+
+        $qrcode = str_replace('250', '100%', $qrcode);
+        $qrcode = str_replace('viewBox="0 0 100% 100%"', 'viewBox="0 0 250 250"', $qrcode);
+
+        $output_file = 'img-' . $nomorPendaftaran . '.png';
+
+        Storage::disk('public')->put($output_file, $qrcode); //public/qrcode/img-1557309130.png
+
+        // $file = asset('qrcode/img-'.$nomorPendaftaran.'.png');
+        $file = 'http://127.0.0.1:8002/qrcode/img-'.$nomorPendaftaran.'.png';
+        // $file = 'https://www.nicesnippets.com/upload/blog/1622612582_social-media.png';
+
+        $caption = 'Silahkan menggunakan QRCode diatas untuk tiket masuk.';
+
+        $url = 'http://127.0.0.1:8000/send-media';
+
+        $response = Http::post($url, [
+            'number' => $phone,
+            'caption' => $caption,
+            'file' => $file,
+        ]);
+        $res = json_decode($response, false);
+
+        return $res->status;
     }
 
     /**
