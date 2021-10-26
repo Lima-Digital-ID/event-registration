@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\Province;
 use App\Models\Visitors;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ListRegistrationController extends Controller
 {
