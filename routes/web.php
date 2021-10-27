@@ -16,13 +16,16 @@ use App\Http\Controllers\Frontend\RegistrationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'administrator'], function() {    
+        Route::get('/', function () {
+            return view('dashboard');
+        });
+        
         Route::get('dashboard', function () {
             return view('dashboard');
         })->name('dashboard');

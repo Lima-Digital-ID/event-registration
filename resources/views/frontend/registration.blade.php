@@ -21,7 +21,7 @@
     <div class="main">
         <div class="container">
             <form action="{{ route('registration-store') }}" method="POST" class="appointment-form" id="appointment-form">
-                <h2>Form Registrasi</h2>
+                <h2>Form Registrasi Hari Aksara Internasional 2021</h2>
                 @csrf
                 <div class="row">
                     <div class="col">

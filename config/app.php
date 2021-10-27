@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Event Registration'),
+    'name' => env('APP_NAME', 'Hari Aksara Internasional 2021'),
 
     /*
     |--------------------------------------------------------------------------
