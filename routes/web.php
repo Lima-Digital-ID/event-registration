@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('list-registration', ListRegistrationController::class);
         Route::resource('guest-book', GuestBookController::class);
         Route::post('add-guest', [GuestBookController::class, 'addGuest'])->name('add-guest');
+        Route::get('checkin/{id}', [GuestBookController::class, 'checkIn'])->name('guest-book.checkin');
     });
 
 });

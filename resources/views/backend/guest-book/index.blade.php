@@ -10,7 +10,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Buku Tamu</h1>
-      <a href="{{ route('guest-book.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Tambah</a>
+      <a href="{{ route('guest-book.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Checkin dengan qrcode</a>
     </div>
 
     <!-- Content Row -->
@@ -51,8 +51,8 @@
                       <th class="text-center">Nama</th>
                       <th class="text-center">Email</th>
                       <th class="text-center">Gender</th>
-                      <th class="text-center">Checkin</th>
-                      <th class="text-center">Aksi</th>
+                      <th class="text-center">Checkin pada</th>
+                      {{--  <th class="text-center">Aksi</th>  --}}
                     </tr>
                   </thead>
                   <tfoot>
@@ -62,8 +62,8 @@
                       <th class="text-center">Nama</th>
                       <th class="text-center">Email</th>
                       <th class="text-center">Gender</th>
-                      <th class="text-center">Checkin</th>
-                      <th class="text-center">Aksi</th>
+                      <th class="text-center">Checkin pada</th>
+                      {{--  <th class="text-center">Aksi</th>  --}}
                     </tr>
                   </tfoot>
                   <tbody>
@@ -74,14 +74,28 @@
                       <td class="text-center">{{ $item->name }}</td>
                       <td class="text-center">{{ $item->email }}</td>
                       <td class="text-center">{{ $item->gender }}</td>
-                      <td class="text-center">{{ $item->updated_at }}</td>
-                      <td>
+                      {{--  <td class="text-center">{{ $item->updated_at }}</td>  --}}
+                      <td class="text-center">
+                        @if (isset($item->checkin_at))
+                            {{ $item->checkin_at }}
+                        @else
                         <div class="d-flex justify-content-center">
                           <div>
+                            <a href="{{ route('guest-book.checkin', $item->id) }}" class="mr-2">
+                              <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-md" data-toggle="tooltip" title="Detail" data-placement="top">Check</button>
+                            </a>
+                          </div>
+                        </div>                            
+                        @endif
+                      </td>
+                      {{--  <td>  --}}
+                        {{--  <div class="d-flex justify-content-center">  --}}
+                          {{--  <div>
                             <a href="{{ route('guest-book.show', $item->id) }}" class="mr-2">
                               <button type="button" id="PopoverCustomT-1" class="btn btn-success btn-md" data-toggle="tooltip" title="Detail" data-placement="top"><span class="fa fa-eye"></span></button>
                             </a>
-                          </div>
+                          </div>  --}}
+
                           {{--  <div>
                             <a href="{{ route('list-registration.edit', $item->id) }}" class="mr-2">
                               <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-md" data-toggle="tooltip" title="Edit" data-placement="top"><span class="fa fa-pen"></span></button>
@@ -96,8 +110,8 @@
                               </button>
                             </form>
                           </div>  --}}
-                        </div>
-                      </td>
+                        {{--  </div>  --}}
+                      {{--  </td>  --}}
                     </tr>
                     @endforeach
                   </tbody>

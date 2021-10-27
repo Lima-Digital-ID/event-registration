@@ -18,12 +18,20 @@ class GuestBookController extends Controller
     public function index()
     {
         try {
-            $this->params['data'] = GuestBook::select(
+            // $this->params['data'] = GuestBook::select(
+            //                             'guest_book.id',
+            //                             'guest_book.updated_at',
+            //                             'visitors.*'   
+            //                         )
+            //                         ->join('visitors', 'visitors.id', 'guest_book.visitor_id')
+            //                         ->orderBy('visitors.nomor_pendaftaran', 'DESC')
+            //                         ->get();
+            $this->params['data'] = Visitors::select(
                                              'guest_book.id',
-                                             'guest_book.updated_at',
+                                             'guest_book.created_at as checkin_at',
                                              'visitors.*'   
                                             )
-                                            ->join('visitors', 'visitors.id', 'guest_book.visitor_id')
+                                            ->leftJoin('guest_book', 'visitors.id', 'guest_book.visitor_id')
                                             ->orderBy('visitors.nomor_pendaftaran', 'DESC')
                                             ->get();
         }
@@ -147,7 +155,7 @@ class GuestBookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -230,6 +238,32 @@ class GuestBookController extends Controller
             ];
 
             return $json;
+        }
+    }
+
+    public function checkIn($id)
+    {
+        try {
+            $isAlreadyGuest = GuestBook::where('visitor_id', $id)->count();
+
+            if($isAlreadyGuest > 0) {
+                // sudah melakukan checkin
+                return redirect()->back()->withError('Sudah melakukan checkin.');
+            }
+            else {
+                $checkIn = new GuestBook;
+                $checkIn->visitor_id = $id;
+                
+                $checkIn->save();
+    
+                return back()->withStatus('Berhasil melakukan checkin.');
+            }
+        }
+        catch(\Exception $e){
+            return redirect()->back()->withError('Terjadi kesalahan. '.$e->getMessage());
+        }
+        catch(\Illuminate\Database\QueryException $e){
+            return redirect()->back()->withError('Terjadi kesalahan pada database. '.$e->getMessage());
         }
     }
 }
