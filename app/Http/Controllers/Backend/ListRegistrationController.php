@@ -83,71 +83,99 @@ class ListRegistrationController extends Controller
      */
     public function store(Request $request)
     {
+        // $this->validate($request, 
+        // [
+        //         // 'nomor' => 'required',
+        //         'nama' => 'required',
+        //         'email' => 'required',
+        //         'gender' => 'required|not_in:0',
+        //         'no_hp' => 'required',
+        //         'tgl_lahir' => 'required',
+        //         'provinsi' => 'required|not_in:0',
+        //         'kota' => 'required|not_in:0',
+        //         'alamat' => 'required',
+        //     ],
+        //     [
+        //         'required' => ':attribute harus diisi.',
+        //         'not_in' => ':attribute harus dipilih.',
+        //         'password.min' => 'Minimal panjang 4 karakter.'
+        //     ],
+        //     [
+        //         // 'nomor' => 'Nomor Pendaftaran',
+        //         'nama' => 'Nama',
+        //         'email' => 'Email',
+        //         'gender' => 'Gender',
+        //         'no_hp' => 'Nomor Handphone',
+        //         'tgl_lahir' => 'Tanggal Lahir',
+        //         'provinsi' => 'Provinsi',
+        //         'kota' => 'Kota',
+        //         'alamat' => 'Alamat',
+        //     ],
+        // );
+
         $this->validate($request, 
         [
-                // 'nomor' => 'required',
                 'nama' => 'required',
-                'email' => 'required',
-                'gender' => 'required|not_in:0',
-                'no_hp' => 'required',
-                'tgl_lahir' => 'required',
-                'provinsi' => 'required|not_in:0',
-                'kota' => 'required|not_in:0',
-                'alamat' => 'required',
+                'meja' => 'required',
+                'undangan' => 'required',
+                'no_urut' => 'required',
             ],
             [
                 'required' => ':attribute harus diisi.',
-                'not_in' => ':attribute harus dipilih.',
-                'password.min' => 'Minimal panjang 4 karakter.'
             ],
             [
-                // 'nomor' => 'Nomor Pendaftaran',
                 'nama' => 'Nama',
-                'email' => 'Email',
-                'gender' => 'Gender',
-                'no_hp' => 'Nomor Handphone',
-                'tgl_lahir' => 'Tanggal Lahir',
-                'provinsi' => 'Provinsi',
-                'kota' => 'Kota',
-                'alamat' => 'Alamat',
+                'meja' => 'Meja',
+                'undangan' => 'Undangan',
+                'no_urut' => 'Nomor urut',
             ],
         );
 
         try {
-            $nomorPendaftaran = null;
-            $peserta = Visitors::orderBy('nomor_pendaftaran', 'DESC')->get();
+            // $nomorPendaftaran = null;
+            // $peserta = Visitors::orderBy('nomor_pendaftaran', 'DESC')->get();
 
-            $now = date('Ymd');
+            // $now = date('Ymd');
 
-            if($peserta->count() > 0){
-                $nomorPendaftaran = $peserta[0]->nomor_pendaftaran;
+            // if($peserta->count() > 0){
+            //     $nomorPendaftaran = $peserta[0]->nomor_pendaftaran;
 
-                $lastIncrement = substr($nomorPendaftaran, 8);
+            //     $lastIncrement = substr($nomorPendaftaran, 8);
 
-                $nomorPendaftaran = str_pad($lastIncrement + 1, 3, 0, STR_PAD_LEFT);
-                $nomorPendaftaran = $now.$nomorPendaftaran;
+            //     $nomorPendaftaran = str_pad($lastIncrement + 1, 3, 0, STR_PAD_LEFT);
+            //     $nomorPendaftaran = $now.$nomorPendaftaran;
 
-            }
-            else{
-                $nomorPendaftaran = $now."001";
-            }
+            // }
+            // else{
+            //     $nomorPendaftaran = $now."001";
+            // }
             
+            // $newPeserta = new Visitors;
+            // $newPeserta->nomor_pendaftaran = $nomorPendaftaran;
+            // $newPeserta->name = $request->nama;
+            // $newPeserta->province_id = $request->provinsi;
+            // $newPeserta->city_id = $request->kota;
+            // $newPeserta->address = $request->alamat;
+            // $newPeserta->phone = $request->get('no_hp');
+            // $newPeserta->email = $request->email;
+            // $newPeserta->gender = $request->gender;
+            // $newPeserta->date_of_birth = $request->get('tgl_lahir');
+
+            // $newPeserta->save();
+
+            // $sendWhatsapp = $this->sendMedia($nomorPendaftaran, $request->get('no_hp'));
+
+            // Mail::to($request->get('email'))->send(new \App\Mail\EmailMessage($nomorPendaftaran));
+            $nomorPendaftaran = $request->undangan.$request->meja.$request->no_urut;
+
             $newPeserta = new Visitors;
             $newPeserta->nomor_pendaftaran = $nomorPendaftaran;
             $newPeserta->name = $request->nama;
-            $newPeserta->province_id = $request->provinsi;
-            $newPeserta->city_id = $request->kota;
-            $newPeserta->address = $request->alamat;
-            $newPeserta->phone = $request->get('no_hp');
-            $newPeserta->email = $request->email;
-            $newPeserta->gender = $request->gender;
-            $newPeserta->date_of_birth = $request->get('tgl_lahir');
-
+            $newPeserta->undangan = $request->undangan;
+            $newPeserta->meja = $request->meja;
+            $newPeserta->urutan_no = $request->no_urut;
+            
             $newPeserta->save();
-
-            $sendWhatsapp = $this->sendMedia($nomorPendaftaran, $request->get('no_hp'));
-
-            Mail::to($request->get('email'))->send(new \App\Mail\EmailMessage($nomorPendaftaran));
 
             return redirect('administrator/list-registration')->withStatus('Berhasil menyimpan data.');
         }
@@ -200,14 +228,7 @@ class ListRegistrationController extends Controller
     public function show($id)
     {
         try {
-            $this->params['data'] = Visitors::select(
-                                                    'visitors.*',
-                                                    'province.nama AS provinsi',
-                                                    'city.nama AS kota',
-                                                    )
-                                                    ->join('province', 'province.id', 'visitors.province_id')
-                                                    ->join('city', 'city.id', 'visitors.city_id')
-                                                    ->findOrFail($id);
+            $this->params['data'] = Visitors::findOrFail($id);
 
             return view('backend.visitors.show', $this->params);
         }
@@ -228,8 +249,6 @@ class ListRegistrationController extends Controller
     public function edit($id)
     {
         $this->params['data'] = Visitors::find($id);
-        $this->params['provinsi'] = Province::orderBy('nama')->get();
-        $this->params['kota'] = City::where('province_id', $this->params['data']->province_id)->orderBy('nama')->get();
 
         return view('backend.visitors.edit', $this->params);
     }
@@ -243,51 +262,66 @@ class ListRegistrationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // $this->validate($request, 
+        // [
+        //         'nomor' => 'required',
+        //         'nama' => 'required',
+        //         'email' => 'required',
+        //         'gender' => 'required|not_in:0',
+        //         'no_hp' => 'required',
+        //         'tgl_lahir' => 'required',
+        //         'provinsi' => 'required|not_in:0',
+        //         'kota' => 'required|not_in:0',
+        //         'alamat' => 'required',
+        //     ],
+        //     [
+        //         'required' => ':attribute harus diisi.',
+        //         'not_in' => ':attribute harus dipilih.',
+        //         'password.min' => 'Minimal panjang 4 karakter.'
+        //     ],
+        //     [
+        //         'nomor' => 'Nomor Pendaftaran',
+        //         'nama' => 'Nama',
+        //         'email' => 'Email',
+        //         'gender' => 'Gender',
+        //         'no_hp' => 'Nomor Handphone',
+        //         'tgl_lahir' => 'Tanggal Lahir',
+        //         'provinsi' => 'Provinsi',
+        //         'kota' => 'Kota',
+        //         'alamat' => 'Alamat',
+        //     ],
+        // );
         $this->validate($request, 
         [
-                'nomor' => 'required',
                 'nama' => 'required',
-                'email' => 'required',
-                'gender' => 'required|not_in:0',
-                'no_hp' => 'required',
-                'tgl_lahir' => 'required',
-                'provinsi' => 'required|not_in:0',
-                'kota' => 'required|not_in:0',
-                'alamat' => 'required',
+                'meja' => 'required',
+                'undangan' => 'required',
+                'no_urut' => 'required',
             ],
             [
                 'required' => ':attribute harus diisi.',
-                'not_in' => ':attribute harus dipilih.',
-                'password.min' => 'Minimal panjang 4 karakter.'
             ],
             [
-                'nomor' => 'Nomor Pendaftaran',
                 'nama' => 'Nama',
-                'email' => 'Email',
-                'gender' => 'Gender',
-                'no_hp' => 'Nomor Handphone',
-                'tgl_lahir' => 'Tanggal Lahir',
-                'provinsi' => 'Provinsi',
-                'kota' => 'Kota',
-                'alamat' => 'Alamat',
+                'meja' => 'Meja',
+                'undangan' => 'Undangan',
+                'no_urut' => 'Nomor urut',
             ],
         );
 
         try {
-            $newPeserta = Visitors::find($id);
-            $newPeserta->nomor_pendaftaran = $request->get('_nomor');
-            $newPeserta->name = $request->nama;
-            $newPeserta->province_id = $request->provinsi;
-            $newPeserta->city_id = $request->kota;
-            $newPeserta->address = $request->alamat;
-            $newPeserta->phone = $request->get('no_hp');
-            $newPeserta->email = $request->email;
-            $newPeserta->gender = $request->gender;
-            $newPeserta->date_of_birth = $request->get('tgl_lahir');
+            $nomorPendaftaran = $request->undangan.$request->meja.$request->no_urut;
+            $editPeserta = Visitors::find($id);
 
-            $newPeserta->save();
+            $editPeserta->nomor_pendaftaran = $nomorPendaftaran;
+            $editPeserta->name = $request->nama;
+            $editPeserta->undangan = $request->undangan;
+            $editPeserta->meja = $request->meja;
+            $editPeserta->urutan_no = $request->no_urut;
 
-            Mail::to($request->get('email'))->send(new \App\Mail\EmailMessage($request->get('_nomor')));
+            $editPeserta->save();
+
+            // Mail::to($request->get('email'))->send(new \App\Mail\EmailMessage($request->get('_nomor')));
 
             return redirect('administrator/list-registration')->withStatus('Berhasil menyimpan data.');
         }

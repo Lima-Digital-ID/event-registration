@@ -49,53 +49,53 @@
                 </span>
                 @enderror
             </div>
-            {{--  <form action="{{ route('guest-book.store') }}" method="POST">
-                @csrf  --}}
-                
-                {{--  <div class="form-group">
-                    <label for="visitor">Peserta</label>
-                    <select name="visitor" id="visitor" class="form-control select2 @error('visitor') is-invalid @enderror">
-                        <option value="0" {{ old('visitor') == 0 ? 'selected' : '' }}>Pilih Peserta</option>
-                        @foreach ($visitor as $item)
-                        <option value="{{ $item->id }}" {{ old('visitor') == $item->id ? 'selected' : '' }}>{{ $item->nomor_pendaftaran.' - '.$item->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('visitor')
+             {{-- <form action="{{ route('add-guest') }}" method="POST">
+                @csrf 
+                <div class="form-group">
+                    <label for="nomor_pendaftaran">QR Code</label>
+                    <input type="text" name="nomor_pendaftaran" id="nomor_pendaftaran" class="form-control" placeholder="Scan QR Code atau masukkan nomor pendaftaran disini..." autofocus>
+                    @error('nomor_pendaftaran')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-                </div>  --}}
-                {{--  <button type="submit" class="btn btn-success">Simpan</button>  --}}
-                {{--  <button type="reset" class="btn btn-danger">Reset</button>  --}}
-            {{--  </form>  --}}
+                </div>
+                <button type="submit" class="btn btn-success">Simpan</button> 
+                <button type="reset" class="btn btn-danger">Reset</button> 
+             </form>  --}}
           </div>
         </div>
       </div>
 
     </div>
-    {{--  <div class="row p-xl-3">
-        <div class="col">
-            <div id="success-alert" class="alert alert-success alert-dismissible fade show" style="visibility: hidden;" role="alert">
+     <div class="row p-xl-3">
+        <div class="col" id="alertDiv">
+            {{-- <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <span id="success-message">Berhasil!</span>
+                <span id="success-message">Berhasil!</span><br>
+                <span>Kode Booking : nomor</span><br>
+                <span>Nama : nama</span><br>
+                <span>Undangan : undangan</span><br>
+                <span>Meja : meja</span><br>
+                <span>Nomor Urut : nomor urut</span><br>
             </div>
-            <div id="warning-alert" class="alert alert-warning alert-dismissible fade show"style="visibility: hidden;" role="alert">
+            <div id="warning-alert" class="alert alert-warning alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <span id="warning-message">Peserta sudah terdaftar di buku tamu.</span>
             </div>
-            <div id="error-alert" class="alert alert-danger alert-dismissible fade show"style="visibility: hidden;" role="alert">
+            <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <span id="error-message">Terjadi kesalahan.</span>
-            </div>
+            </div> --}}
         </div>
-    </div>  --}}
+    </div> 
+    {{-- <div id="myDiv"></div> --}}
 
 </div>
 @endsection
@@ -112,9 +112,10 @@
     $('#qrcode').change(function(e) {
         console.log('start ajax');
         var code = $(this).val();
+        code = code.substr(code.length - 7);
         console.log(code);
+        $('#qrcode').val(code);
         let url = "{{ route('add-guest') }}";
-        console.log(url);
 
         $.ajax({
             url: url,
@@ -124,23 +125,38 @@
                 "nomor_pendaftaran": code,
             },
             success: function(response){
+                console.log('success');
                 console.log(response);
+
+                if(response["message"] == 'berhasil' || response['message'] == 'sudah terdaftar di buku tamu') {
+                    var kode = response['data']['nomor_pendaftaran'];
+                    var nama = response['data']['name'];
+                    var undangan = response['data']['undangan'];
+                    var meja = response['data']['meja'];
+                    var no_urut = response['data']['urutan_no'];
+                }
+
                 if(response["message"] == 'berhasil') {
-                    console.log(response['data']['name']);
+                    console.log(nama);
                     console.log('berhasil menambahkan tamu');
-                    alert('Berhasil menambahkan tamu');
+                    // alert('Berhasil menambahkan tamu');
+                    $("#alertDiv").html('<div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span id="success-message">Berhasil!</span><br><span>Kode Booking : '+kode+'</span><br><span>Nama : '+nama+'</span><br><span>Undangan : '+undangan+'</span><br><span>Meja : '+meja+'</span><br><span>Nomor Urut : '+no_urut+'</span><br></div>');
                 }
                 else if(response['message'] == 'sudah terdaftar di buku tamu') {
                     console.log(response['message']);
-                    alert('Sudah terdaftar di buku tamu');
+                    // alert('Sudah terdaftar di buku tamu');
+                    var terakhir_checkin = response['checkin'];
+                    $("#alertDiv").html('<div id="warning-alert" class="alert alert-warning alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span id="success-message">Peringatan! Peserta ini sudah melakukan chekin pada '+terakhir_checkin+'.</span><br><span>Kode Booking : '+kode+'</span><br><span>Nama : '+nama+'</span><br><span>Undangan : '+undangan+'</span><br><span>Meja : '+meja+'</span><br><span>Nomor Urut : '+no_urut+'</span><br></div>');
                 }
                 else if(response['message'] == 'peserta tidak ada') {
                     console.log(response['message']);
-                    alert('Peserta tidak ada');
+                    // alert('Peserta tidak ada');
+                    $("#alertDiv").html('<div id="danger-alert" class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span id="success-message">Peserta tidak ada!</span></div>');
                 }
                 else {
                     console.log('terjadi kesalahan');
-                    alert('Terjadi kesalahan');
+                    // alert('Terjadi kesalahan');
+                    $("#alertDiv").html('<div id="danger-alert" class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span id="success-message">Terjadi kesalahan!</span></div>');
                 }
                 $('#qrcode').val('');
             }

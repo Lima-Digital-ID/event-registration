@@ -53,6 +53,18 @@
                 <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->name) }}">
               </div>
               <div class="form-group">
+                <label for="meja">Meja</label>
+                <input type="text" class="form-control form-control-user" name="meja" id="meja" placeholder="Masukkan Meja..." readonly value="{{ old('meja', $data->meja) }}">
+              </div>
+              <div class="form-group">
+                <label for="undangan">Undangan</label>
+                <input type="text" class="form-control form-control-user" name="undangan" id="undangan" placeholder="Masukkan Undangan..." readonly value="{{ old('undangan', $data->undangan) }}">
+              </div>
+              <div class="form-group">
+                <label for="no_urut">Nomor Urut</label>
+                <input type="text" class="form-control form-control-user" name="no_urut" id="no_urut" placeholder="Masukkan Nomor Urut..." readonly value="{{ old('no_urut', $data->urutan_no) }}">
+              </div>
+              {{-- <div class="form-group">
                 <label for="nama">Provinsi</label>
                 <input type="text" class="form-control form-control-user" name="email" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->provinsi) }}">
               </div>
@@ -81,7 +93,7 @@
               <div class="form-group">
                 <label for="nama">Tanggal Lahir</label>
                 <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->date_of_birth) }}">
-              </div>
+              </div> --}}
               <div class="form-group">
                 <label for="nama">Registrasi Pada</label>
                 <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->created_at) }}">

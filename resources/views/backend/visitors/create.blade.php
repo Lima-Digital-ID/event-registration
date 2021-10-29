@@ -64,7 +64,7 @@
                             </span>
                             @enderror
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="gender">Gender</label>
                             <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror">
                                 <option value="0" {{ old('gender') == 0 ? 'selected' : '' }}>Pilih Gender</option>
@@ -94,10 +94,32 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="col">
                         <div class="form-group">
+                            <label for="meja">Meja</label>
+                            <input type="text" class="form-control form-control-user @error('meja') is-invalid @enderror" name="meja" id="meja" placeholder="Masukkan Meja..." value="{{ old('meja') }}">
+                            @error('meja')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="undangan">Undangan</label>
+                            <input type="text" class="form-control form-control-user @error('undangan') is-invalid @enderror" name="undangan" id="undangan" placeholder="Masukkan Undangan..." value="{{ old('undangan') }}">
+                            @error('undangan')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        {{-- <div class="form-group">
                             <label for="tgl_lahir">Tanggal Lahir</label>
                             <input type="date" class="form-control form-control-user @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" id="tgl_lahir" placeholder="Tanggal Lahir..." value="{{ old('tgl_lahir') }}">
                             @error('tgl_lahir')
@@ -135,6 +157,17 @@
                             <label for="alamat">Alamat</label>
                             <textarea name="alamat" id="alamat" cols="30" rows="5" class="form-control @error('alamat') is-invalid @enderror"></textarea>
                             @error('alamat')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div> --}}
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="no_urut">Nomor Urut</label>
+                            <input type="text" class="form-control form-control-user @error('no_urut') is-invalid @enderror" name="no_urut" id="no_urut" placeholder="Masukkan Nomor Urut..." value="{{ old('no_urut') }}">
+                            @error('no_urut')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

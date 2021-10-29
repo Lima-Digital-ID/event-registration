@@ -186,13 +186,17 @@ class GuestBookController extends Controller
             $visitor = Visitors::where('nomor_pendaftaran', $nomorPendaftaran)->first();
             if($visitor) {
                 // jika peserta ditemukan
-                $isAlreadyGuest = GuestBook::where('visitor_id', $visitor->id)->get();
+                $isAlreadyGuest = GuestBook::where('visitor_id', $visitor->id)
+                                            ->whereDate('created_at', date('Y-m-d'))
+                                            ->orderBy('created_at', 'DESC')
+                                            ->get();
                 if(count($isAlreadyGuest) > 0) {
                     // sudah terdaftar sebagai tamu
                     $response = [
                         'status' => 'success',
                         'message' => 'sudah terdaftar di buku tamu',
-                        'data' => $visitor
+                        'data' => $visitor,
+                        'checkin' => $isAlreadyGuest[0]->created_at
                     ];
                     return $response;
                 }

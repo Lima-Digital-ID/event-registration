@@ -48,9 +48,10 @@
                     <tr>
                       <th class="text-center">#</th>
                       <th class="text-center">Nomor Pendaftar</th>
-                      <th class="text-center">Nama</th>
-                      <th class="text-center">Email</th>
-                      <th class="text-center">Gender</th>
+                      <th class="text-center">Instansi</th>
+                      <th class="text-center">Undangan</th>
+                      <th class="text-center">Meja</th>
+                      <th class="text-center">Nomor Urut</th>
                       <th class="text-center">Waktu</th>
                       <th class="text-center">Aksi</th>
                     </tr>
@@ -59,9 +60,10 @@
                     <tr>
                       <th class="text-center">#</th>
                       <th class="text-center">Nomor Pendaftar</th>
-                      <th class="text-center">Nama</th>
-                      <th class="text-center">Email</th>
-                      <th class="text-center">Gender</th>
+                      <th class="text-center">Instansi</th>
+                      <th class="text-center">Undangan</th>
+                      <th class="text-center">Meja</th>
+                      <th class="text-center">Nomor Urut</th>
                       <th class="text-center">Waktu</th>
                       <th class="text-center">Aksi</th>
                     </tr>
@@ -72,8 +74,9 @@
                       <td class="text-center">{{ $loop->iteration }}</td>
                       <td class="text-center">{{ $item->nomor_pendaftaran }}</td>
                       <td class="text-center">{{ $item->name }}</td>
-                      <td class="text-center">{{ $item->email }}</td>
-                      <td class="text-center">{{ $item->gender }}</td>
+                      <td class="text-center">{{ $item->undangan }}</td>
+                      <td class="text-center">{{ $item->meja }}</td>
+                      <td class="text-center">{{ $item->urutan_no }}</td>
                       <td class="text-center">{{ $item->created_at }}</td>
                       <td>
                         <div class="d-flex justify-content-center">
@@ -82,7 +85,7 @@
                               <button type="button" id="PopoverCustomT-1" class="btn btn-success btn-md" data-toggle="tooltip" title="Detail" data-placement="top"><span class="fa fa-eye"></span></button>
                             </a>
                           </div>
-                          {{--  <div>
+                           {{-- <div>
                             <a href="{{ route('list-registration.edit', $item->id) }}" class="mr-2">
                               <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-md" data-toggle="tooltip" title="Edit" data-placement="top"><span class="fa fa-pen"></span></button>
                             </a>

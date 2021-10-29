@@ -48,22 +48,24 @@
                     <tr>
                       <th class="text-center">#</th>
                       <th class="text-center">Nomor Pendaftar</th>
-                      <th class="text-center">Nama</th>
-                      <th class="text-center">Email</th>
-                      <th class="text-center">Gender</th>
-                      <th class="text-center">Checkin pada</th>
-                      {{--  <th class="text-center">Aksi</th>  --}}
+                      <th class="text-center">Instansi</th>
+                      <th class="text-center">Undangan</th>
+                      <th class="text-center">Meja</th>
+                      <th class="text-center">Nomor Urut</th>
+                      <th class="text-center">Checkin</th>
+                      {{-- <th class="text-center">Aksi</th> --}}
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
                       <th class="text-center">#</th>
                       <th class="text-center">Nomor Pendaftar</th>
-                      <th class="text-center">Nama</th>
-                      <th class="text-center">Email</th>
-                      <th class="text-center">Gender</th>
-                      <th class="text-center">Checkin pada</th>
-                      {{--  <th class="text-center">Aksi</th>  --}}
+                      <th class="text-center">Instansi</th>
+                      <th class="text-center">Undangan</th>
+                      <th class="text-center">Meja</th>
+                      <th class="text-center">Nomor Urut</th>
+                      <th class="text-center">Checkin</th>
+                      {{-- <th class="text-center">Aksi</th> --}}
                     </tr>
                   </tfoot>
                   <tbody>
@@ -72,8 +74,9 @@
                       <td class="text-center">{{ $loop->iteration }}</td>
                       <td class="text-center">{{ $item->nomor_pendaftaran }}</td>
                       <td class="text-center">{{ $item->name }}</td>
-                      <td class="text-center">{{ $item->email }}</td>
-                      <td class="text-center">{{ $item->gender }}</td>
+                      <td class="text-center">{{ $item->undangan }}</td>
+                      <td class="text-center">{{ $item->meja }}</td>
+                      <td class="text-center">{{ $item->urutan_no }}</td>
                       {{--  <td class="text-center">{{ $item->updated_at }}</td>  --}}
                       <td class="text-center">
                         @if (isset($item->checkin_at))
