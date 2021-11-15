@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Hari Aksara Internasional 2021</title>
+  <title>{{ \App\Models\Website::select('judul')->first()->judul; }}</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -51,7 +51,7 @@
             <div class="carousel-background"><img src="{{ asset('frontend/assets/img/slide/slide-1.jpg') }}" style="height: 100%;width: 100%;" alt=""></div>
             <div class="carousel-container">
               <div class="carousel-content">
-                <h2 class="animate__animated animate__fadeInDown">Selamat Datang di <span>Hari Aksara Internasional 2021</span></h2>
+                <h2 class="animate__animated animate__fadeInDown">Selamat Datang di <span>{{ \App\Models\Website::select('judul')->first()->judul; }}</span></h2>
                 <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
                 <a href="{{ route('registration') }}" target="_blank" class="btn-get-started animate__animated animate__fadeInUp scrollto">Ikuti</a>
               </div>

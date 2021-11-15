@@ -57,6 +57,24 @@
                             <input type="text" class="form-control form-control-user" name="nomor" id="nomor" placeholder="ex: 20210913" readonly value="{{ old('nomor', $nomorPendaftaran) }}">
                         </div>  --}}
                         <div class="form-group">
+                            <label for="instansi">Instansi</label>
+                            <input type="text" class="form-control form-control-user @error('instansi') is-invalid @enderror" name="instansi" id="instansi" placeholder="Masukkan Instansi..." value="{{ old('instansi', $data->instansi) }}">
+                            @error('instansi')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="jabatan">Jabatan</label>
+                            <input type="text" class="form-control form-control-user @error('jabatan') is-invalid @enderror" name="jabatan" id="jabatan" placeholder="Masukkan jabatan..." value="{{ old('jabatan', $data->jabatan) }}">
+                            @error('jabatan')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="nama">Nama</label>
                             <input type="text" class="form-control form-control-user @error('nama') is-invalid @enderror" name="nama" id="nama" placeholder="Masukkan Nama..." value="{{ old('nama', $data->name) }}">
                             @error('nama')
@@ -65,12 +83,12 @@
                             </span>
                             @enderror
                         </div>
-                        {{-- <div class="form-group">
-                            <label for="gender">Gender</label>
+                        <div class="form-group">
+                            <label for="gender">Jenis Kelamin</label>
                             <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror">
-                                <option value="0" {{ old('gender') == 0 ? 'selected' : '' }}>Pilih Gender</option>
-                                <option value="Pria" {{ old('gender') == 'Pria' ? 'selected' : '' }}>Pria</option>
-                                <option value="Wanita" {{ old('gender') == 'Wanita' ? 'selected' : '' }}>Wanita</option>
+                                <option value="0" {{ old('gender') == 0 ? 'selected' : '' }}>Pilih Jenis Kelamin</option>
+                                <option value="Pria" {{ old('gender', $data->gender) == 'Pria' ? 'selected' : '' }}>Pria</option>
+                                <option value="Wanita" {{ old('gender', $data->gender) == 'Wanita' ? 'selected' : '' }}>Wanita</option>
                             </select>
                             @error('gender')
                             <span class="invalid-feedback" role="alert">
@@ -80,7 +98,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail">Email</label>
-                            <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Masukkan Email..." value="{{ old('email') }}">
+                            <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Masukkan Email..." value="{{ old('email', $data->email) }}">
                             @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -89,15 +107,15 @@
                         </div>
                         <div class="form-group">
                             <label for="no_hp">No. Handphone</label>
-                            <input type="text" class="form-control form-control-user @error('no_hp') is-invalid @enderror" name="no_hp" id="no_hp" placeholder="ex: 081767283xxx" value="{{ old('no_hp') }}">
+                            <input type="text" class="form-control form-control-user @error('no_hp') is-invalid @enderror" name="no_hp" id="no_hp" placeholder="ex: 081767283xxx" value="{{ old('no_hp', $data->phone) }}">
                             @error('no_hp')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                        </div> --}}
+                        </div>
                     </div>
-                    <div class="col">
+                    {{--  <div class="col">
                         <div class="form-group">
                             <label for="meja">Meja</label>
                             <input type="text" class="form-control form-control-user @error('meja') is-invalid @enderror" name="meja" id="meja" placeholder="Masukkan Meja..." value="{{ old('meja', $data->meja) }}">
@@ -107,11 +125,11 @@
                             </span>
                             @enderror
                         </div>
-                    </div>
+                    </div>  --}}
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="form-group">
+                        {{--  <div class="form-group">
                             <label for="undangan">Undangan</label>
                             <input type="text" class="form-control form-control-user @error('undangan') is-invalid @enderror" name="undangan" id="undangan" placeholder="Masukkan Undangan..." value="{{ old('undangan', $data->undangan) }}">
                             @error('undangan')
@@ -119,8 +137,8 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                        </div>
-                        {{-- <div class="form-group">
+                        </div>  --}}
+                        {{--  <div class="form-group">
                             <label for="tgl_lahir">Tanggal Lahir</label>
                             <input type="date" class="form-control form-control-user @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" id="tgl_lahir" placeholder="Tanggal Lahir..." value="{{ old('tgl_lahir') }}">
                             @error('tgl_lahir')
@@ -128,13 +146,13 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                        </div>
+                        </div>  --}}
                         <div class="form-group">
                             <label for="provinsi">Provinsi</label>
-                            <select name="provinsi" id="provinsi" class="form-control select2 @error('provinsi') is-invalid @enderror">
+                            <select name="provinsi" id="provinsi" class="form-control @error('provinsi') is-invalid @enderror">
                                 <option value="0" {{ old('provinsi') == 0 ? 'selected' : '' }}>Pilih Provinsi</option>
                                 @foreach ($provinsi as $item)
-                                <option value="{{ $item->id }}" {{ old('provinsi') == $item->id ? 'selected' : '' }}>{{ $item->nama }}</option>
+                                <option value="{{ $item->id }}" {{ old('provinsi', $data->province_id) == $item->id ? 'selected' : '' }}>{{ $item->nama }}</option>
                                 @endforeach
                             </select>
                             @error('provinsi')
@@ -156,15 +174,15 @@
                         </div>
                         <div class="form-group">
                             <label for="alamat">Alamat</label>
-                            <textarea name="alamat" id="alamat" cols="30" rows="5" class="form-control @error('alamat') is-invalid @enderror"></textarea>
+                            <textarea name="alamat" id="alamat" cols="30" rows="5" class="form-control @error('alamat') is-invalid @enderror">{{ old('alamat', $data->address) }}</textarea>
                             @error('alamat')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                        </div> --}}
+                        </div>
                     </div>
-                    <div class="col">
+                    {{--  <div class="col">
                         <div class="form-group">
                             <label for="no_urut">Nomor Urut</label>
                             <input type="text" class="form-control form-control-user @error('no_urut') is-invalid @enderror" name="no_urut" id="no_urut" placeholder="Masukkan Nomor Urut..." value="{{ old('no_urut', $data->urutan_no) }}">
@@ -174,7 +192,7 @@
                             </span>
                             @enderror
                         </div>
-                    </div>
+                    </div>  --}}
                 </div>
                 <button type="submit" class="btn btn-success">Simpan</button>
                 <button type="reset" class="btn btn-danger">Reset</button>
@@ -197,6 +215,31 @@
         });
         $('#kota').select2({
             theme: "classic"
+        });
+        var currentProvince = '{{ $data->province_id }}';
+        var currentCity = '{{ $data->city_id }}';
+        console.log(currentProvince);
+        let url = "{{ route('get-city') }}"+ '?province_id=' + currentProvince;
+        console.log(url);
+        $.ajax({
+            type: "get",
+            url: url,
+            dataType: 'json',
+            success: function(response) {
+                console.log('request success');
+                console.log(response);
+                $.each(response, function(key, value) {
+                    // console.log(value);
+                    var selected = '';
+                    if(value.id == currentCity) {
+                        selected = 'selected';
+                    }
+                    $('#kota')
+                        .append($("<option "+selected+"></option>")
+                            .attr("value", value.id)
+                            .text(value.nama));
+                });
+            }
         });
         $('#provinsi').change(function(e) {
             $('#kota')

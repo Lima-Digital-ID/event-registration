@@ -16,8 +16,16 @@ class AdminSeeder extends Seeder
         $newUser = new \App\Models\User;
         $newUser->name = 'Administrator';
         $newUser->email = 'administrator@mail.com';
-        $newUser->password = \Hash::make('mwb546hs51');
+        $newUser->password = \Hash::make('12345678');
         $newUser->level = 'Administrator';
+
+        $newUser->save();
+
+        $newUser = new \App\Models\User;
+        $newUser->name = 'Panitia 1';
+        $newUser->email = 'panitia1@mail.com';
+        $newUser->password = \Hash::make('12345678');
+        $newUser->level = 'Panitia';
 
         $newUser->save();
     }

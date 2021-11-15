@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AccountManagementController;
 use App\Http\Controllers\Backend\ListRegistrationController;
 use App\Http\Controllers\Backend\GuestBookController;
+use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Frontend\RegistrationController;
 
 /*
@@ -35,6 +36,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('guest-book', GuestBookController::class);
         Route::post('add-guest', [GuestBookController::class, 'addGuest'])->name('add-guest');
         Route::get('checkin/{id}', [GuestBookController::class, 'checkIn'])->name('guest-book.checkin');
+        Route::resource('setting', SettingController::class);
     });
 
 });

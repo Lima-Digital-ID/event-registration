@@ -48,10 +48,10 @@
                     <tr>
                       <th class="text-center">#</th>
                       <th class="text-center">Nomor Pendaftar</th>
-                      <th class="text-center">Instansi</th>
-                      <th class="text-center">Undangan</th>
-                      <th class="text-center">Meja</th>
-                      <th class="text-center">Nomor Urut</th>
+                      <th class="text-center">Nama</th>
+                      <th class="text-center">Email</th>
+                      <th class="text-center">Alamat</th>
+                      <th class="text-center">Jenis Kelamin</th>
                       <th class="text-center">Waktu</th>
                       <th class="text-center">Aksi</th>
                     </tr>
@@ -60,10 +60,10 @@
                     <tr>
                       <th class="text-center">#</th>
                       <th class="text-center">Nomor Pendaftar</th>
-                      <th class="text-center">Instansi</th>
-                      <th class="text-center">Undangan</th>
-                      <th class="text-center">Meja</th>
-                      <th class="text-center">Nomor Urut</th>
+                      <th class="text-center">Nama</th>
+                      <th class="text-center">Email</th>
+                      <th class="text-center">Alamat</th>
+                      <th class="text-center">Jenis Kelamin</th>
                       <th class="text-center">Waktu</th>
                       <th class="text-center">Aksi</th>
                     </tr>
@@ -74,9 +74,9 @@
                       <td class="text-center">{{ $loop->iteration }}</td>
                       <td class="text-center">{{ $item->nomor_pendaftaran }}</td>
                       <td class="text-center">{{ $item->name }}</td>
-                      <td class="text-center">{{ $item->undangan }}</td>
-                      <td class="text-center">{{ $item->meja }}</td>
-                      <td class="text-center">{{ $item->urutan_no }}</td>
+                      <td class="text-center">{{ $item->email }}</td>
+                      <td class="text-center">{{ $item->address }}</td>
+                      <td class="text-center">{{ $item->gender }}</td>
                       <td class="text-center">{{ $item->created_at }}</td>
                       <td>
                         <div class="d-flex justify-content-center">

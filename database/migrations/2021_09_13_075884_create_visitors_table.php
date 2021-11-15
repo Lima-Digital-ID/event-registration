@@ -22,7 +22,7 @@ class CreateVisitorsTable extends Migration
             $table->string('phone', 15)->unique();
             $table->string('email', 60)->unique();
             $table->enum('gender', ['Pria', 'Wanita']);
-            $table->date('date_of_birth');
+            $table->date('date_of_birth')->nullable();
             $table->timestamps();
 
             $table->foreign('province_id')->references('id')->on('province');

@@ -1,10 +1,13 @@
+@php
+$title = \App\Models\Website::select('judul')->first()->judul;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registration</title>
+    <title>{{ $title }}</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="{{ asset('frontend/fonts/material-icon/css/material-design-iconic-font.min.css') }}">
@@ -21,10 +24,28 @@
     <div class="main">
         <div class="container">
             <form action="{{ route('registration-store') }}" method="POST" class="appointment-form" id="appointment-form">
-                <h2>Form Registrasi Hari Aksara Internasional 2021</h2>
+                <h2>{{ $title }}</h2>
                 @csrf
                 <div class="row">
                     <div class="col">
+                        <div class="form-group">
+                            <label for="instansi">Nama Instansi</label>
+                            <input type="text" class="form-control form-control-user @error('instansi') is-invalid @enderror" name="instansi" id="instansi" placeholder="Masukkan instansi..." value="{{ old('instansi') }}">
+                            @error('instansi')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="jabatan">Jabatan</label>
+                            <input type="text" class="form-control form-control-user @error('jabatan') is-invalid @enderror" name="jabatan" id="jabatan" placeholder="Masukkan jabatan..." value="{{ old('jabatan') }}">
+                            @error('jabatan')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
                         <div class="form-group">
                             <label for="nama">Nama</label>
                             <input type="text" class="form-control form-control-user @error('nama') is-invalid @enderror" name="nama" id="nama" placeholder="Masukkan Nama..." value="{{ old('nama') }}">
@@ -35,9 +56,9 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="gender">Gender</label>
+                            <label for="gender">Jenis Kelamin</label>
                             <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror">
-                                <option value="0" {{ old('gender') == 0 ? 'selected' : '' }}>Pilih Gender</option>
+                                <option value="0" {{ old('gender') == 0 ? 'selected' : '' }}>Pilih Jenis Kelamin</option>
                                 <option value="Pria" {{ old('gender') == 'Pria' ? 'selected' : '' }}>Pria</option>
                                 <option value="Wanita" {{ old('gender') == 'Wanita' ? 'selected' : '' }}>Wanita</option>
                             </select>
@@ -65,7 +86,7 @@
                             </span>
                             @enderror
                         </div>
-                        <div class="form-group">
+                        {{--  <div class="form-group">
                             <label for="tgl_lahir">Tanggal Lahir</label>
                             <input type="date" class="form-control form-control-user @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" id="tgl_lahir" placeholder="Tanggal Lahir..." value="{{ old('tgl_lahir') }}">
                             @error('tgl_lahir')
@@ -73,10 +94,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                        </div>
-                        {{--  @php
-                            dd($provinsi);
-                        @endphp  --}}
+                        </div>  --}}
                         <div class="form-group">
                             <label for="provinsi">Provinsi</label>
                             <select name="provinsi" id="provinsi" class="select-list select2 @error('provinsi') is-invalid @enderror">

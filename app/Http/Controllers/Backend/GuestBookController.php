@@ -204,6 +204,7 @@ class GuestBookController extends Controller
                     // belum terdaftar sebagai tamu
                     $newGuest = new GuestBook;
                     $newGuest->visitor_id = $visitor->id;
+                    $newGuest->operator = auth()->user()->id;
 
                     $newGuest->save();
 
@@ -257,6 +258,7 @@ class GuestBookController extends Controller
             else {
                 $checkIn = new GuestBook;
                 $checkIn->visitor_id = $id;
+                $checkIn->operator = auth()->user()->id;
                 
                 $checkIn->save();
     

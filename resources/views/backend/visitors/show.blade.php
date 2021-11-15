@@ -45,14 +45,18 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
+                <label for="nama">Instansi</label>
+                <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->instansi) }}">
+              </div>
+              <div class="form-group">
                 <label for="nama">Nomor Pendaftaran</label>
                 <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->nomor_pendaftaran) }}">
               </div>
               <div class="form-group">
-                <label for="nama">Nama</label>
-                <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->name) }}">
+                <label for="nama">No. Handphone</label>
+                <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->phone) }}">
               </div>
-              <div class="form-group">
+              {{--  <div class="form-group">
                 <label for="meja">Meja</label>
                 <input type="text" class="form-control form-control-user" name="meja" id="meja" placeholder="Masukkan Meja..." readonly value="{{ old('meja', $data->meja) }}">
               </div>
@@ -63,8 +67,8 @@
               <div class="form-group">
                 <label for="no_urut">Nomor Urut</label>
                 <input type="text" class="form-control form-control-user" name="no_urut" id="no_urut" placeholder="Masukkan Nomor Urut..." readonly value="{{ old('no_urut', $data->urutan_no) }}">
-              </div>
-              {{-- <div class="form-group">
+              </div>  --}}
+              <div class="form-group">
                 <label for="nama">Provinsi</label>
                 <input type="text" class="form-control form-control-user" name="email" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->provinsi) }}">
               </div>
@@ -79,8 +83,12 @@
             </div>
             <div class="col">
               <div class="form-group">
-                <label for="nama">No. Handphone</label>
-                <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->phone) }}">
+                <label for="nama">Jabatan</label>
+                <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->jabatan) }}">
+              </div>
+              <div class="form-group">
+                <label for="nama">Nama</label>
+                <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->name) }}">
               </div>
               <div class="form-group">
                 <label for="nama">Email</label>
@@ -90,13 +98,17 @@
                 <label for="nama">Gender</label>
                 <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->gender) }}">
               </div>
-              <div class="form-group">
+              {{--  <div class="form-group">
                 <label for="nama">Tanggal Lahir</label>
                 <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->date_of_birth) }}">
-              </div> --}}
+              </div>  --}}
               <div class="form-group">
                 <label for="nama">Registrasi Pada</label>
                 <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->created_at) }}">
+              </div>
+              <div class="form-group">
+                <label for="nama">Didaftarkan Oleh</label>
+                <input type="text" class="form-control form-control-user" name="nama" id="nama" placeholder="Masukkan Nama..." readonly value="{{ old('nama', $data->operator) }}">
               </div>
               <div class="form-group">
                 <label for="nama">QR Code</label><br>
